@@ -18,14 +18,15 @@ public class SessionDurationWidget implements StatusBarWidget, StatusBarWidget.T
 
     private StatusBar statusBar;
     private final Timer timer;
-    private final Instant startTime;
+    private Instant startTime;
     private String displayText = "00:00:00";
+    SessionDurationState state;
 
     public SessionDurationWidget(@NotNull Project project) {
         LOG.info("SessionDurationWidget created");
 
         // load the previous state
-        SessionDurationState state = project.getService(SessionDurationState.class);
+        state = project.getService(SessionDurationState.class);
         if (state.startTime == 0) {
             state.startTime = Instant.now().toEpochMilli();
         }
@@ -48,8 +49,16 @@ public class SessionDurationWidget implements StatusBarWidget, StatusBarWidget.T
         LOG.info("SessionDurationWidget installed");
     }
 
+    private boolean was_updated = false;
     private void updateText() {
+        // it's the only way that I managed to fix the bug with the widget not updating
+        // we simply check if the state was reset and if the widget was not updated yet
         try {
+            if (!was_updated && state.startTime == 0) {
+                was_updated = true;
+                startTime = Instant.now();
+                state.startTime = startTime.toEpochMilli();
+            }
             Duration duration = Duration.between(startTime, Instant.now());
             long seconds = duration.getSeconds();
             long minutes = seconds / 60;
