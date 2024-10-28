@@ -1,6 +1,6 @@
 package franciszekw.sessiondurationplugin;
 
-import com.intellij.openapi.diagnostic.Logger
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.wm.StatusBarWidget;
 import com.intellij.openapi.wm.impl.status.TextPanel;
 import org.jetbrains.annotations.NotNull;
@@ -54,13 +54,14 @@ public class SessionDurationWidget implements StatusBarWidget, StatusBarWidget.T
     @Override
     public @NotNull String getText() {
         LOG.info("getText called");
+        assert textPanel.getText() != null;
         return textPanel.getText();
     }
 
     @Override
     public float getAlignment() {
         LOG.info("getAlignment called");
-        // allign to the right
+        // align to the right
         return 1.0f;
     }
 
