@@ -28,7 +28,7 @@ public class SessionDurationWidgetFactory implements StatusBarWidgetFactory {
     public @NotNull StatusBarWidget createWidget(@NotNull Project project) {
         LOG.info("createWidget called");
         try {
-            return new SessionDurationWidget();
+            return new SessionDurationWidget(project);
         } catch (Exception e) {
             LOG.error("Error creating SessionDurationWidget", e);
             throw e;
