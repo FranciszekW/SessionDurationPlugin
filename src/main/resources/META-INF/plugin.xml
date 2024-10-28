@@ -30,5 +30,7 @@
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
         <statusBarWidgetFactory id="SessionDurationWidgetFactory" implementation="franciszekw.sessiondurationplugin.SessionDurationWidgetFactory"/>
+
+        <projectService serviceImplementation="franciszekw.sessiondurationplugin.SessionDurationState"/>
     </extensions>
 </idea-plugin>
