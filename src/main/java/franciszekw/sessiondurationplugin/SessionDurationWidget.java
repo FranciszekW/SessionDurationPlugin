@@ -1,5 +1,6 @@
 package franciszekw.sessiondurationplugin;
 
+import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.wm.StatusBarWidget;
 import com.intellij.openapi.wm.impl.status.TextPanel;
 import org.jetbrains.annotations.NotNull;
@@ -12,11 +13,14 @@ import java.time.Duration;
 import java.time.Instant;
 
 public class SessionDurationWidget implements StatusBarWidget, StatusBarWidget.TextPresentation {
+    private final static Logger LOG = Logger.getInstance(SessionDurationWidget.class);
+
     private final TextPanel textPanel = new TextPanel();
     private final Timer timer;
     private final Instant startTime;
 
     public SessionDurationWidget() {
+        LOG.info("SessionDurationWidget created");
         this.startTime = Instant.now();
         // refresh the text every second
         this.timer = new Timer(1000, new ActionListener() {
@@ -36,27 +40,33 @@ public class SessionDurationWidget implements StatusBarWidget, StatusBarWidget.T
         long hours = minutes / 60;
         seconds = seconds % 60;
         minutes = minutes % 60;
-        textPanel.setText(String.format("%02d:%02d:%02d", hours, minutes, seconds));
+        String text = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+        LOG.info("Updating text to " + text);
+        textPanel.setText(text);
     }
 
     @Override
     public @NotNull String ID() {
+        LOG.info("ID called");
         return "SessionDurationWidget";
     }
 
     @Override
     public @NotNull String getText() {
+        LOG.info("getText called");
         return textPanel.getText();
     }
 
     @Override
     public float getAlignment() {
+        LOG.info("getAlignment called");
         // allign to the right
         return 1.0f;
     }
 
     @Override
     public @Nullable String getTooltipText() {
+        LOG.info("getTooltipText called");
         return "Current session duration";
     }
 }
