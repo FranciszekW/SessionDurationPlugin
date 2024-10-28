@@ -17,4 +17,8 @@ public class SessionDurationState implements PersistentStateComponent<SessionDur
     public void loadState(SessionDurationState state) {
         this.startTime = state.startTime;
     }
+
+    public void reset() {
+        this.startTime = 0;
+    }
 }
