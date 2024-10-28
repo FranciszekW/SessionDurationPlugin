@@ -32,5 +32,9 @@
         <statusBarWidgetFactory id="SessionDurationWidgetFactory" implementation="franciszekw.sessiondurationplugin.SessionDurationWidgetFactory"/>
 
         <projectService serviceImplementation="franciszekw.sessiondurationplugin.SessionDurationState"/>
+
+        <postStartupActivity implementation="franciszekw.sessiondurationplugin.TimeResetter"/>
+<!--        I don't know why this is not working-->
+<!--        <beforeRunStartupTasks implementation="franciszekw.sessiondurationplugin.TimeResetter"/>-->
     </extensions>
 </idea-plugin>
