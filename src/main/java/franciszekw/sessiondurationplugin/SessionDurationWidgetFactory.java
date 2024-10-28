@@ -26,7 +26,13 @@ public class SessionDurationWidgetFactory implements StatusBarWidgetFactory {
 
     @Override
     public @NotNull StatusBarWidget createWidget(@NotNull Project project) {
-        return new SessionDurationWidget();
+        LOG.info("createWidget called");
+        try {
+            return new SessionDurationWidget();
+        } catch (Exception e) {
+            LOG.error("Error creating SessionDurationWidget", e);
+            throw e;
+        }
     }
 
     @Override

@@ -34,15 +34,19 @@ public class SessionDurationWidget implements StatusBarWidget, StatusBarWidget.T
     }
 
     private void updateText() {
-        Duration duration = Duration.between(startTime, Instant.now());
-        long seconds = duration.getSeconds();
-        long minutes = seconds / 60;
-        long hours = minutes / 60;
-        seconds = seconds % 60;
-        minutes = minutes % 60;
-        String text = String.format("%02d:%02d:%02d", hours, minutes, seconds);
-        LOG.info("Updating text to " + text);
-        textPanel.setText(text);
+        try {
+            Duration duration = Duration.between(startTime, Instant.now());
+            long seconds = duration.getSeconds();
+            long minutes = seconds / 60;
+            long hours = minutes / 60;
+            seconds = seconds % 60;
+            minutes = minutes % 60;
+            String text = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+            LOG.info("Updating text to " + text);
+            textPanel.setText(text);
+        } catch (Exception e) {
+            LOG.error("Error updating text", e);
+        }
     }
 
     @Override
