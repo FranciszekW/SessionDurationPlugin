@@ -1,6 +1,7 @@
 package franciszekw.sessiondurationplugin;
 
 import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.openapi.wm.StatusBar;
 import com.intellij.openapi.wm.StatusBarWidget;
 import com.intellij.openapi.wm.impl.status.TextPanel;
 import org.jetbrains.annotations.NotNull;
@@ -15,13 +16,15 @@ import java.time.Instant;
 public class SessionDurationWidget implements StatusBarWidget, StatusBarWidget.TextPresentation {
     private final static Logger LOG = Logger.getInstance(SessionDurationWidget.class);
 
-    private final TextPanel textPanel = new TextPanel();
+    private StatusBar statusBar;
     private final Timer timer;
     private final Instant startTime;
+    private String displayText = "00:00:00";
 
     public SessionDurationWidget() {
         LOG.info("SessionDurationWidget created");
         this.startTime = Instant.now();
+
         // refresh the text every second
         this.timer = new Timer(1000, new ActionListener() {
             @Override
@@ -43,7 +46,11 @@ public class SessionDurationWidget implements StatusBarWidget, StatusBarWidget.T
             minutes = minutes % 60;
             String text = String.format("%02d:%02d:%02d", hours, minutes, seconds);
             LOG.info("Updating text to " + text);
-            textPanel.setText(text);
+            this.displayText = text;
+
+            if (statusBar != null) {
+                statusBar.updateWidget(ID());
+            }
         } catch (Exception e) {
             LOG.error("Error updating text", e);
         }
@@ -58,8 +65,7 @@ public class SessionDurationWidget implements StatusBarWidget, StatusBarWidget.T
     @Override
     public @NotNull String getText() {
         LOG.info("getText called");
-        assert textPanel.getText() != null;
-        return textPanel.getText();
+        return displayText;
     }
 
     @Override
@@ -79,5 +85,12 @@ public class SessionDurationWidget implements StatusBarWidget, StatusBarWidget.T
     public @Nullable WidgetPresentation getPresentation() {
         LOG.info("getPresentation called");
         return this;
+    }
+
+    @Override
+    public void dispose() {
+        if (timer != null) {
+            timer.stop();
+        }
     }
 }
