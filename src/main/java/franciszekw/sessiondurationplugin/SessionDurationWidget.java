@@ -74,4 +74,10 @@ public class SessionDurationWidget implements StatusBarWidget, StatusBarWidget.T
         LOG.info("getTooltipText called");
         return "Current session duration";
     }
+
+    @Override
+    public @Nullable WidgetPresentation getPresentation() {
+        LOG.info("getPresentation called");
+        return this;
+    }
 }
