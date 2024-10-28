@@ -2,8 +2,8 @@ package franciszekw.sessiondurationplugin;
 
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.wm.StatusBar;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.StatusBarWidget;
-import com.intellij.openapi.wm.impl.status.TextPanel;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -21,9 +21,15 @@ public class SessionDurationWidget implements StatusBarWidget, StatusBarWidget.T
     private final Instant startTime;
     private String displayText = "00:00:00";
 
-    public SessionDurationWidget() {
+    public SessionDurationWidget(@NotNull Project project) {
         LOG.info("SessionDurationWidget created");
-        this.startTime = Instant.now();
+
+        // load the previous state
+        SessionDurationState state = project.getService(SessionDurationState.class);
+        if (state.startTime == 0) {
+            state.startTime = Instant.now().toEpochMilli();
+        }
+        this.startTime = Instant.ofEpochMilli(state.startTime);
 
         // refresh the text every second
         this.timer = new Timer(1000, new ActionListener() {
@@ -84,7 +90,7 @@ public class SessionDurationWidget implements StatusBarWidget, StatusBarWidget.T
     @Override
     public @Nullable String getTooltipText() {
         LOG.info("getTooltipText called");
-        return "Current session duration";
+        return "Current session duration: " + displayText;
     }
 
     @Override
@@ -95,6 +101,7 @@ public class SessionDurationWidget implements StatusBarWidget, StatusBarWidget.T
 
     @Override
     public void dispose() {
+        LOG.info("SessionDurationWidget disposed");
         if (timer != null) {
             timer.stop();
         }
