@@ -38,6 +38,6 @@ public class SessionDurationWidgetFactory implements StatusBarWidgetFactory {
     @Override
     public void disposeWidget(@NotNull StatusBarWidget widget) {
         LOG.info("disposeWidget called");
-        // do nothing
+        widget.dispose();
     }
 }
