@@ -28,6 +28,7 @@
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
-
+        <!-- Add your extensions here -->
+        <statusBarWidgetFactory implementation="franciszekw.sessiondurationplugin.SessionDurationWidgetFactory"/>
     </extensions>
 </idea-plugin>
