@@ -8,6 +8,7 @@ import org.jetbrains.annotations.Nullable;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.Duration;
 import java.time.Instant;
 
 public class SessionDurationWidget implements StatusBarWidget, StatusBarWidget.TextPresentation {
@@ -17,36 +18,45 @@ public class SessionDurationWidget implements StatusBarWidget, StatusBarWidget.T
 
     public SessionDurationWidget() {
         this.startTime = Instant.now();
+        // refresh the text every second
         this.timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO update textPanel
+                // update the text
+                updateText();
             }
         });
         this.timer.start();
     }
 
+    private void updateText() {
+        Duration duration = Duration.between(startTime, Instant.now());
+        long seconds = duration.getSeconds();
+        long minutes = seconds / 60;
+        long hours = minutes / 60;
+        seconds = seconds % 60;
+        minutes = minutes % 60;
+        textPanel.setText(String.format("%02d:%02d:%02d", hours, minutes, seconds));
+    }
+
     @Override
     public @NotNull String ID() {
-        // TODO
-        return "";
+        return "SessionDurationWidget";
     }
 
     @Override
     public @NotNull String getText() {
-        // TODO
-        return "";
+        return textPanel.getText();
     }
 
     @Override
     public float getAlignment() {
-        // TODO
-        return 0;
+        // allign to the right
+        return 1.0f;
     }
 
     @Override
     public @Nullable String getTooltipText() {
-        // TODO
-        return "";
+        return "Current session duration";
     }
 }
