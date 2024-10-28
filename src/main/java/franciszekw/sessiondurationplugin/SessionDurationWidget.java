@@ -36,6 +36,12 @@ public class SessionDurationWidget implements StatusBarWidget, StatusBarWidget.T
         this.timer.start();
     }
 
+    @Override
+    public void install(@NotNull StatusBar statusBar) {
+        this.statusBar = statusBar;
+        LOG.info("SessionDurationWidget installed");
+    }
+
     private void updateText() {
         try {
             Duration duration = Duration.between(startTime, Instant.now());
