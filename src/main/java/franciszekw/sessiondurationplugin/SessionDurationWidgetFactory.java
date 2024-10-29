@@ -9,6 +9,9 @@ import com.intellij.openapi.wm.StatusBarWidgetFactory;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * A factory for creating the session duration widget.
+ */
 public class SessionDurationWidgetFactory implements StatusBarWidgetFactory {
     private static final Logger LOG = Logger.getInstance(SessionDurationWidgetFactory.class);
 

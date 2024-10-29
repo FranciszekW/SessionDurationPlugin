@@ -13,6 +13,9 @@ import java.awt.event.ActionListener;
 import java.time.Duration;
 import java.time.Instant;
 
+/**
+ * A widget that displays the duration of the current project session in the status bar.
+ */
 public class SessionDurationWidget implements StatusBarWidget, StatusBarWidget.TextPresentation {
     private final static Logger LOG = Logger.getInstance(SessionDurationWidget.class);
 
@@ -50,9 +53,14 @@ public class SessionDurationWidget implements StatusBarWidget, StatusBarWidget.T
     }
 
     private boolean was_updated = false;
+
+    /**
+     * Updates the display text with the current session duration.
+     */
     private void updateText() {
-        // it's the only way that I managed to fix the bug with the widget not updating
-        // we simply check if the state was reset and if the widget was not updated yet
+        // It's the only way that I managed to fix the bug with the widget not updating
+        // when closing the IDE and opening it again.
+        // We simply check if the state was reset and if the widget was not updated yet.
         try {
             if (!was_updated && state.startTime == 0) {
                 was_updated = true;
