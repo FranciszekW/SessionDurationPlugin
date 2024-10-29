@@ -22,7 +22,7 @@ public class SessionDurationWidget implements StatusBarWidget, StatusBarWidget.T
 
     private StatusBar statusBar;
     private final Timer timer;
-    private Instant startTime;
+    private final Instant startTime;
     private String displayText = "00:00:00";
     final SessionDurationState state;
 
@@ -54,14 +54,7 @@ public class SessionDurationWidget implements StatusBarWidget, StatusBarWidget.T
      * Updates the display text with the current session duration.
      */
     private void updateText() {
-        // It's the only way that I managed to fix the bug with the widget not updating
-        // when closing the IDE and opening it again.
-        // We simply check if the state was reset and if the widget was not updated yet.
         try {
-            if (state.startTime == 0) {
-                startTime = Instant.now();
-                state.startTime = startTime.toEpochMilli();
-            }
             Duration duration = Duration.between(startTime, Instant.now());
             long seconds = duration.getSeconds();
             long minutes = seconds / 60;
