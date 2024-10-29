@@ -1,1 +1,1 @@
-IntelliJ IDE plugin to show current project session duration time on the status bar.
+IntelliJ IDE plugin to show current session duration time on the status bar.
