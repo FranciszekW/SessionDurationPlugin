@@ -3,14 +3,11 @@ package franciszekw.sessiondurationplugin;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.wm.StatusBar;
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.StatusBarWidget;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.Duration;
 import java.time.Instant;
 
