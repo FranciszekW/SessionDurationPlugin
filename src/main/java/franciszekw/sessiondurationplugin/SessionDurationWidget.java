@@ -23,7 +23,7 @@ public class SessionDurationWidget implements StatusBarWidget, StatusBarWidget.T
     private final Timer timer;
     private Instant startTime;
     private String displayText = "00:00:00";
-    SessionDurationState state;
+    final SessionDurationState state;
 
     public SessionDurationWidget(@NotNull Project project) {
         LOG.info("SessionDurationWidget created");
@@ -36,12 +36,9 @@ public class SessionDurationWidget implements StatusBarWidget, StatusBarWidget.T
         this.startTime = Instant.ofEpochMilli(state.startTime);
 
         // refresh the text every second
-        this.timer = new Timer(1000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // update the text
-                updateText();
-            }
+        this.timer = new Timer(1000, e -> {
+            // update the text
+            updateText();
         });
         this.timer.start();
     }
