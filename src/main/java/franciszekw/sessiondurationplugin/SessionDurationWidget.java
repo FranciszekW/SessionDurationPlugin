@@ -1,5 +1,6 @@
 package franciszekw.sessiondurationplugin;
 
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.wm.StatusBar;
 import com.intellij.openapi.project.Project;
@@ -25,11 +26,11 @@ public class SessionDurationWidget implements StatusBarWidget, StatusBarWidget.T
     private String displayText = "00:00:00";
     final SessionDurationState state;
 
-    public SessionDurationWidget(@NotNull Project project) {
+    public SessionDurationWidget() {
         LOG.info("SessionDurationWidget created");
 
         // load the previous state
-        state = project.getService(SessionDurationState.class);
+        state = ApplicationManager.getApplication().getService(SessionDurationState.class);
         if (state.startTime == 0) {
             state.startTime = Instant.now().toEpochMilli();
         }
@@ -49,8 +50,6 @@ public class SessionDurationWidget implements StatusBarWidget, StatusBarWidget.T
         LOG.info("SessionDurationWidget installed");
     }
 
-    private boolean was_updated = false;
-
     /**
      * Updates the display text with the current session duration.
      */
@@ -59,8 +58,7 @@ public class SessionDurationWidget implements StatusBarWidget, StatusBarWidget.T
         // when closing the IDE and opening it again.
         // We simply check if the state was reset and if the widget was not updated yet.
         try {
-            if (!was_updated && state.startTime == 0) {
-                was_updated = true;
+            if (state.startTime == 0) {
                 startTime = Instant.now();
                 state.startTime = startTime.toEpochMilli();
             }

@@ -1,5 +1,6 @@
 package franciszekw.sessiondurationplugin;
 
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.NlsContexts;
@@ -30,7 +31,8 @@ public class SessionDurationWidgetFactory implements StatusBarWidgetFactory {
     public @NotNull StatusBarWidget createWidget(@NotNull Project project) {
         LOG.info("createWidget called");
         try {
-            return new SessionDurationWidget(project);
+//            ApplicationManager.getApplication().getService(SessionDurationState.class).reset();
+            return new SessionDurationWidget();
         } catch (Exception e) {
             LOG.error("Error creating SessionDurationWidget", e);
             throw e;
