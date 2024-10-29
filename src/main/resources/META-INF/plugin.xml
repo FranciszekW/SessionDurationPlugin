@@ -30,13 +30,5 @@
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
         <statusBarWidgetFactory id="SessionDurationWidgetFactory" implementation="franciszekw.sessiondurationplugin.SessionDurationWidgetFactory"/>
-
-        <applicationService serviceImplementation="franciszekw.sessiondurationplugin.SessionDurationState"/>
-
-        <applicationService serviceImplementation="franciszekw.sessiondurationplugin.TimeResetter"/>
-
-<!--        <beforeRunStartupTasks implementation="franciszekw.sessiondurationplugin.TimeResetter"/>-->
-<!--        I don't know why this is not working-->
-<!--        <beforeRunStartupTasks implementation="franciszekw.sessiondurationplugin.TimeResetter"/>-->
     </extensions>
 </idea-plugin>
